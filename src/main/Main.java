@@ -17,6 +17,7 @@ public class Main extends Application {
         
         primaryStage.setTitle("Pokémon LuisRe");
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         
         LoginController controller = loader.getController();
         controller.setStage(primaryStage);

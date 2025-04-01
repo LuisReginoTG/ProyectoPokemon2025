@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JOptionPane;
@@ -13,13 +14,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import model.Entrenador;
 
 public class LoginController {
 	Entrenador entrenador = new Entrenador("luisre", "123456", 1000);
 	public Stage stage;
+	public boolean sonido = false;
+	public MediaPlayer mediaPlayer;
 
     @FXML
     private Button btnAceptar;
@@ -35,6 +42,9 @@ public class LoginController {
 
     @FXML
     private ImageView imgLogo;
+
+    @FXML
+    private ImageView imgSonido;
 
     @FXML
     private Label lblError;
@@ -127,5 +137,33 @@ public class LoginController {
 		txtUsuario.setText("");
 		txtPassword.setText("");
 		
+	}
+	
+	public void sonido() {
+		if(!this.sonido) {
+			mediaPlayer.play();
+			
+			imgSonido.setImage(new Image(new File("./img/sonidoact.png").toURI().toString()));
+			this.sonido = true;
+		}else {
+			mediaPlayer.pause();
+			this.sonido=false;
+			imgSonido.setImage(new Image(new File("./img/sonidodes.png").toURI().toString()));
+			
+		}
+	}
+	
+	@FXML
+    void activarDesactivarSonido(MouseEvent event) {
+		sonido();
+    }
+	
+	@FXML
+	public void initialize() {
+		String rutaSonido = "./sonidos/Opening.mp3";
+		Media sound = new Media(new File(rutaSonido).toURI().toString());
+		mediaPlayer = new MediaPlayer(sound);
+		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+		sonido();
 	}
 }
